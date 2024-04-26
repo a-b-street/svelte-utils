@@ -1,11 +1,11 @@
 <script lang="ts">
   // Block the rest of the page while loading something
 
-  export let msg: string | null = null;
+  export let loading: string | null = null;
 </script>
 
-{#if msg}
-  <div>{msg}</div>
+{#if loading}
+  <div>{loading}</div>
 {/if}
 
 <style>

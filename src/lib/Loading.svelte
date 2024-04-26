@@ -1,7 +1,7 @@
 <script lang="ts">
-  // Block the rest of the page while loading something
+  // Block the rest of the page while 'loading' is non-empty
 
-  export let loading: string | null = null;
+  export let loading: string;
 </script>
 
 {#if loading}

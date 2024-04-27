@@ -1,3 +1,4 @@
+export { default as Geocoder } from "./Geocoder.svelte";
 export { default as Legend } from "./Legend.svelte";
 export { default as Loading } from "./Loading.svelte";
 export { default as PropertiesTable } from "./PropertiesTable.svelte";

@@ -1,4 +1,5 @@
-import type { Feature, Point, Polygon, Position } from "geojson";
+import turfBbox from "@turf/bbox";
+import type { Feature, FeatureCollection, GeoJSON, Point, Polygon, Position } from "geojson";
 import type {
   DataDrivenPropertyValueSpecification,
   ExpressionSpecification,
@@ -113,4 +114,16 @@ export function pointFeature(pt: Position): Feature<Point> {
 // places (10cm) is plenty of precision for many use cases
 export function setPrecision(pt: Position): Position {
   return [Math.round(pt[0] * 10e6) / 10e6, Math.round(pt[1] * 10e6) / 10e6];
+}
+
+export function emptyGeojson(): FeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: [],
+  };
+}
+
+// Suitable for passing to map.fitBounds. Work around https://github.com/Turfjs/turf/issues/1807.
+export function bbox(gj: GeoJSON): [number, number, number, number] {
+  return turfBbox(gj) as [number, number, number, number];
 }

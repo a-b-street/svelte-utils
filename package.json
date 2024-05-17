@@ -19,9 +19,9 @@
       "svelte": "./dist/index.js"
     },
     "./overpass": {
-      "import": "./dist/overpass/index.js",
       "types": "./dist/overpass/index.d.ts",
-      "svelte": "./dist/overpass/index.js"
+      "svelte": "./dist/overpass/index.js",
+      "import": "./dist/overpass/index.js"
     }
   },
   "files": [

@@ -22,6 +22,11 @@
       "types": "./dist/overpass/index.d.ts",
       "svelte": "./dist/overpass/index.js",
       "import": "./dist/overpass/index.js"
+    },
+    "./map": {
+      "types": "./dist/map/index.d.ts",
+      "svelte": "./dist/map/index.js",
+      "import": "./dist/map/index.js"
     }
   },
   "files": [

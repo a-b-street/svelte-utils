@@ -4,6 +4,7 @@
   import { createEventDispatcher } from "svelte";
   import { overpassQueryForPolygon } from "./index.js";
   import { PolygonTool, PolygonControls } from "maplibre-draw-polygon";
+  import { downloadGeneratedFile } from "../index.js";
 
   export let map: Map | null;
 
@@ -14,12 +15,17 @@
   }>();
 
   let polygonTool: PolygonTool | null = null;
+  let saveCopy = false;
 
   async function importPolygon(boundaryGj: Feature<Polygon>) {
     try {
       dispatch("loading", "Loading from Overpass");
       let resp = await fetch(overpassQueryForPolygon(boundaryGj));
       let osmXml = await resp.text();
+
+      if (saveCopy) {
+        downloadGeneratedFile("osm.xml", osmXml);
+      }
 
       dispatch("gotXml", osmXml);
     } catch (err: any) {
@@ -92,3 +98,8 @@
     Draw an area to import on the map
   </button>
 {/if}
+
+<label>
+  <input type="checkbox" bind:checked={saveCopy} />Save a copy of the osm.xml
+  after importing
+</label>

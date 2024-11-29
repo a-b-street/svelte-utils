@@ -10,7 +10,10 @@
 
   const dispatch = createEventDispatcher<{
     loading: string;
-    gotXml: string;
+    gotXml: {
+      xml: string;
+      boundary: Feature<Polygon>;
+    };
     error: string;
   }>();
 
@@ -27,7 +30,7 @@
         downloadGeneratedFile("osm.xml", osmXml);
       }
 
-      dispatch("gotXml", osmXml);
+      dispatch("gotXml", { xml: osmXml, boundary: boundaryGj });
     } catch (err: any) {
       dispatch("error", err.toString());
     }

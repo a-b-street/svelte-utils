@@ -45,21 +45,21 @@ export function constructMatchExpression<OutputType>(
 }
 
 // Helper for https://maplibre.org/maplibre-style-spec/expressions/#step.
-export function makeColorRamp(
+export function makeRamp<OutputType>(
   input: DataDrivenPropertyValueSpecification<number>,
   limits: number[],
-  colorScale: string[],
-): DataDrivenPropertyValueSpecification<string> {
+  output: OutputType[],
+): DataDrivenPropertyValueSpecification<OutputType> {
   let step: any[] = ["step", input];
   for (let i = 1; i < limits.length; i++) {
-    step.push(colorScale[i - 1]);
+    step.push(output[i - 1]);
     step.push(limits[i]);
   }
-  // Repeat the last color. The upper limit is exclusive, meaning a value
+  // Repeat the last value. The upper limit is exclusive, meaning a value
   // exactly equal to it will use this fallback. For things like percentages,
   // we want to set 100 as the cap.
-  step.push(colorScale[colorScale.length - 1]);
-  return step as DataDrivenPropertyValueSpecification<string>;
+  step.push(output[output.length - 1]);
+  return step as DataDrivenPropertyValueSpecification<OutputType>;
 }
 
 // Create a feature for a point, with no properties.

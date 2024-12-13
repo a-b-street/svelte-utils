@@ -77,7 +77,7 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "dependencies": {
-    "@maptiler/geocoding-control": "^1.2.2",
+    "@maptiler/geocoding-control": "^2.0.1",
     "@turf/bbox": "^7.0.0-alpha.114",
     "maplibre-draw-polygon": "github:dabreegster/maplibre-draw-polygon",
     "maplibre-gl": "^4.1.3",

@@ -6,6 +6,7 @@
 
   export let apiKey: string;
   export let map: Map | null;
+  export let country: string | undefined;
 
   $: mapController = setup(map);
 
@@ -37,6 +38,7 @@
     <GeocodingControl
       {mapController}
       {apiKey}
+      {country}
       proximity={[
         {
           type: "map-center",

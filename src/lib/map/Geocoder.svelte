@@ -8,6 +8,27 @@
   export let map: Map | null;
   export let country: string | undefined;
 
+  // From https://docs.maptiler.com/cloud/api/geocoding/#PlaceType. poi is excluded by default.
+  let allTypes = [
+    "continental_marine",
+    "country",
+    "major_landform",
+    "region",
+    "subregion",
+    "county",
+    "joint_municipality",
+    "joint_submunicipality",
+    "municipality",
+    "municipal_district",
+    "locality",
+    "neighbourhood",
+    "place",
+    "postal_code",
+    "address",
+    "road",
+    "poi",
+  ];
+
   $: mapController = setup(map);
 
   function setup(map: Map | null): MapController | null {
@@ -39,6 +60,7 @@
       {mapController}
       {apiKey}
       {country}
+      types={allTypes}
       proximity={[
         {
           type: "map-center",

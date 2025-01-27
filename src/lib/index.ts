@@ -34,6 +34,9 @@ export async function fetchWithProgress(
   setProgress: (progress: number) => void,
 ): Promise<Uint8Array> {
   let response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`${url} not OK: ${resp.status}`);
+  }
   // TODO Handle error cases better
   let reader = response.body!.getReader();
 

@@ -8,7 +8,7 @@
 <ul>
   {#each rows as [label, color]}
     <li>
-      <span style:background={color} />
+      <span style:background={color}></span>
       {label}
     </li>
   {/each}

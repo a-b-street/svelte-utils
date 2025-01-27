@@ -12,7 +12,6 @@ import type {
 } from "maplibre-gl";
 
 export { default as Geocoder } from "./Geocoder.svelte";
-export { default as Popup } from "./Popup.svelte";
 
 export const isPolygon: ExpressionSpecification = [
   "==",

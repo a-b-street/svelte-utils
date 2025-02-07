@@ -2,6 +2,7 @@ export { default as Legend } from "./Legend.svelte";
 export { default as Loading } from "./Loading.svelte";
 export { default as Modal } from "./Modal.svelte";
 export { default as PropertiesTable } from "./PropertiesTable.svelte";
+export { default as QualitativeLegend } from "./QualitativeLegend.svelte";
 export { default as SequentialLegend } from "./SequentialLegend.svelte";
 
 export function downloadGeneratedFile(filename: string, textInput: string) {
@@ -35,7 +36,7 @@ export async function fetchWithProgress(
 ): Promise<Uint8Array> {
   let response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`${url} not OK: ${resp.status}`);
+    throw new Error(`${url} not OK: ${response.status}`);
   }
   // TODO Handle error cases better
   let reader = response.body!.getReader();

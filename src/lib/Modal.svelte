@@ -1,30 +1,37 @@
 <script lang="ts">
-  // It starts open
-  // on:close is forwarded
-  // Relies on something else for styling (picocss)
-  let dialog: HTMLDialogElement;
+  export let show = false;
+
+  // Relies on external styling (picocss)
+  let modalDialog: HTMLDialogElement | undefined;
+
+  $: {
+    if (modalDialog) {
+      if (show) {
+        modalDialog.showModal();
+      } else {
+        modalDialog.close();
+      }
+    }
+  }
 
   function onClick(e: MouseEvent) {
-    if (dialog.open) {
-      // Anything inside the modal counts as the <div> or something inside that
-      if (e.target == dialog) {
-        dialog.close();
-      }
+    // only dismiss the modal when clicking outside of the inner dialog content, on the dialog itself.
+    if (e.target == modalDialog) {
+      show = false;
     }
   }
 
   function onKeyDown(e: KeyboardEvent) {
     if (e.key == "Escape" || e.key == "Enter") {
       e.stopPropagation();
-      dialog.close();
+      show = false;
     }
   }
 </script>
 
-<svelte:window on:click={onClick} on:keydown={onKeyDown} />
-
-<dialog open on:close bind:this={dialog}>
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<dialog bind:this={modalDialog} on:click={onClick} on:keydown={onKeyDown}>
   <article>
-    <slot {dialog} />
+    <slot />
   </article>
 </dialog>

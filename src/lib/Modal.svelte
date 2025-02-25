@@ -30,7 +30,7 @@
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<dialog bind:this={modalDialog} on:click={onClick} on:keydown={onKeyDown}>
+<dialog bind:this={modalDialog} on:click|stopPropagation={onClick} on:keydown={onKeyDown}>
   <article>
     <slot />
   </article>

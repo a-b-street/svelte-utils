@@ -1,37 +1,31 @@
 <script lang="ts">
-  export let colors: { [name: string]: string };
-  export let horiz = false;
+  export let labelColors: Record<string, string>;
+  export let swatchClass: "rectangle" | "circle" = "rectangle";
+  export let itemsPerRow: 1 | 2 | 3 | 4 = 2;
+  let gridItemWidth = `${100 / itemsPerRow}%`;
 </script>
 
-{#if horiz}
-  <div style="display: flex">
-    {#each Object.entries(colors) as [_, color]}
-      <span style="background: {color}; width: 100%; border: 1px solid black;">
-        &nbsp;
-      </span>
-    {/each}
-  </div>
-  <div style="display: flex; justify-content: space-between;">
-    {#each Object.entries(colors) as [label, _]}
-      <span>{label}</span>
-    {/each}
-  </div>
-{:else}
-  {#each Object.entries(colors) as [label, color]}
-    <div>
-      <span style:background={color} class="vertical-block" />
+<div
+  style="display: grid; grid-template-columns: repeat(auto-fill, calc({gridItemWidth} - 10px)); gap: 10px;"
+>
+  {#each Object.entries(labelColors) as [label, color]}
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span class="color-swatch {swatchClass}" style:background={color} />
       {label}
     </div>
   {/each}
-{/if}
+</div>
 
 <style>
-  .vertical-block {
-    display: block;
-    float: left;
+  .color-swatch.circle {
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+  }
+  .color-swatch.rectangle {
     height: 16px;
-    width: 30px;
-    margin-right: 5px;
-    border: 1px solid #999;
+    width: 24px;
+    border: 1px solid #888;
   }
 </style>

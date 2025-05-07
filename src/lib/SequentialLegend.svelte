@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let colorScale;
+  export let colorScale: string[];
   type IntoLabel = string | number;
   export let labels: { limits: IntoLabel[] } | { buckets: IntoLabel[] };
   export let decimalPlaces = 0;

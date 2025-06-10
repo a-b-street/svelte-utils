@@ -2,7 +2,8 @@
   export let labelColors: Record<string, string>;
   export let swatchClass: "rectangle" | "circle" = "rectangle";
   export let itemsPerRow: 1 | 2 | 3 | 4 = 2;
-  let gridItemWidth = `${100 / itemsPerRow}%`;
+
+  $: gridItemWidth = `${100 / itemsPerRow}%`;
 </script>
 
 <div

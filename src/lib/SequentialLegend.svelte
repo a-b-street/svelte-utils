@@ -5,24 +5,23 @@
   export let decimalPlaces = 0;
   export let fullWidthBucketLegend = false;
 
-  let intoLabels: IntoLabel[] = [];
-  if ("limits" in labels) {
-    intoLabels = labels.limits;
-  } else {
-    intoLabels = labels.buckets;
-  }
-
-  let labelTexts: string[] = intoLabels.map((label) => {
-    if (typeof label === "number") {
-      if (decimalPlaces > 0) {
-        return label.toFixed(decimalPlaces);
+  function labelTexts(
+    labels: { limits: IntoLabel[] } | { buckets: IntoLabel[] },
+    decimalPlaces: number,
+  ): string[] {
+    let intoLabels = "limits" in labels ? labels.limits : labels.buckets;
+    return intoLabels.map((label) => {
+      if (typeof label === "number") {
+        if (decimalPlaces > 0) {
+          return label.toFixed(decimalPlaces);
+        } else {
+          return label.toLocaleString();
+        }
       } else {
-        return label.toLocaleString();
+        return label;
       }
-    } else {
-      return label;
-    }
-  });
+    });
+  }
 </script>
 
 <div
@@ -37,7 +36,7 @@
   </div>
 
   <div class="labels">
-    {#each labelTexts as labelText}
+    {#each labelTexts(labels, decimalPlaces) as labelText}
       <span>{labelText}</span>
     {/each}
   </div>

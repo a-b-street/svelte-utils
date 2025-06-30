@@ -18,5 +18,5 @@
 </script>
 
 <Popup {openOn} let:features>
-  <slot props={getProperties(features)} />
+  <slot props={getProperties(features)} {features} />
 </Popup>

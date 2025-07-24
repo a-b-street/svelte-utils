@@ -35,7 +35,18 @@
   on:click|stopPropagation={onClick}
   on:keydown={onKeyDown}
 >
-  <article>
+  <div>
     <slot />
-  </article>
+  </div>
 </dialog>
+
+<style>
+  div {
+    max-width: 80vw;
+    max-height: 80vh;
+  }
+
+  dialog::backdrop {
+    backdrop-filter: blur(2px);
+  }
+</style>

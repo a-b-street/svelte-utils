@@ -4,13 +4,14 @@
 
   // Input
   export let choice: string;
+  export let bottom = "60px";
   // Output
   export let style: string | StyleSpecification = basemapStyles[choice];
 
   $: style = basemapStyles[choice];
 </script>
 
-<div>
+<div style:bottom>
   <!-- svelte-ignore a11y-missing-content -->
   <h5 class="fa-solid fa-layer-group me-2 align-self-center"></h5>
   <select class="form-select" bind:value={choice}>
@@ -23,7 +24,6 @@
 <style>
   div {
     position: absolute;
-    bottom: 60px;
     left: 10px;
 
     background: white;

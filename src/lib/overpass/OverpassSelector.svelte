@@ -91,18 +91,23 @@
 {#if polygonTool}
   <PolygonControls {polygonTool} />
 {:else}
-  <button type="button" on:click={importCurrentView}>
+  <button class="btn btn-primary" type="button" on:click={importCurrentView}>
     Import current view
   </button>
 
-  <i>or...</i>
+  <p class="fst-italic my-3">or...</p>
 
-  <button type="button" on:click={startPolygonTool}>
+  <button class="btn btn-primary" type="button" on:click={startPolygonTool}>
     Draw an area to import on the map
   </button>
 {/if}
 
-<label>
-  <input type="checkbox" bind:checked={saveCopy} />Save a copy of the osm.xml
-  after importing
-</label>
+<div class="form-check">
+  <label class="form-check-label">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      bind:checked={saveCopy}
+    />Save a copy of the osm.xml after importing
+  </label>
+</div>

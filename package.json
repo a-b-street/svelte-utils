@@ -78,9 +78,9 @@
   "type": "module",
   "dependencies": {
     "@maptiler/geocoding-control": "^2.0.1",
-    "@turf/bbox": "^7.0.0-alpha.114",
+    "@turf/bbox": "^7.2.0",
     "maplibre-draw-polygon": "github:dabreegster/maplibre-draw-polygon",
-    "maplibre-gl": "^4.1.3",
-    "svelte-maplibre": "^0.8.5"
+    "maplibre-gl": "^4.7.1",
+    "svelte-maplibre": "^0.9.14"
   }
 }

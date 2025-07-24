@@ -11,7 +11,7 @@
 >
   {#each Object.entries(labelColors) as [label, color]}
     <div style="display: flex; align-items: center; gap: 6px;">
-      <span class="color-swatch {swatchClass}" style:background={color} />
+      <span class="color-swatch {swatchClass}" style:background={color}></span>
       {label}
     </div>
   {/each}

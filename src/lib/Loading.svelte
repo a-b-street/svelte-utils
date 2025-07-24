@@ -11,7 +11,7 @@
 
     {#if progress != null}
       <div>
-        <progress value={progress} style:width="100%" />
+        <progress value={progress} style:width="100%"></progress>
       </div>
     {/if}
   </div>

@@ -4,7 +4,7 @@
   import { createEventDispatcher } from "svelte";
   import { overpassQueryForPolygon } from "./index.js";
   import { PolygonTool, PolygonControls } from "maplibre-draw-polygon";
-  import { downloadGeneratedFile } from "../index.js";
+  import { downloadGeneratedFile, Checkbox } from "../index.js";
 
   export let map: Map | null;
 
@@ -102,12 +102,6 @@
   </button>
 {/if}
 
-<div class="form-check">
-  <label class="form-check-label">
-    <input
-      class="form-check-input"
-      type="checkbox"
-      bind:checked={saveCopy}
-    />Save a copy of the osm.xml after importing
-  </label>
-</div>
+<Checkbox bind:checked={saveCopy}>
+  Save a copy of the osm.xml after importing
+</Checkbox>

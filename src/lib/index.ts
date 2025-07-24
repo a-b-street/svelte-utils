@@ -1,3 +1,4 @@
+export { default as Checkbox } from "./Checkbox.svelte";
 export { default as Legend } from "./Legend.svelte";
 export { default as Loading } from "./Loading.svelte";
 export { default as Modal } from "./Modal.svelte";

@@ -5,7 +5,7 @@
   import maplibregl, { type Map } from "maplibre-gl";
 
   export let apiKey: string;
-  export let map: Map | null;
+  export let map: Map | undefined;
   export let country: string | undefined;
 
   // From https://docs.maptiler.com/cloud/api/geocoding/#PlaceType. poi is excluded by default.
@@ -31,7 +31,7 @@
 
   $: mapController = setup(map);
 
-  function setup(map: Map | null): MapController | null {
+  function setup(map: Map | undefined): MapController | null {
     if (!map) {
       return null;
     }

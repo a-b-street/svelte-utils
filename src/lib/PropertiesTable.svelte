@@ -1,10 +1,6 @@
 <script lang="ts">
-  interface Props {
-    // Useful for quickly debugging a feature
-    properties: { [name: string]: any };
-  }
-
-  let { properties }: Props = $props();
+  // Useful for quickly debugging a feature
+  let { properties }: { properties: { [name: string]: any } } = $props();
 </script>
 
 <table>

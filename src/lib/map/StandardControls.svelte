@@ -1,16 +1,10 @@
 <script lang="ts">
-  import { run } from "svelte/legacy";
-
   import { NavigationControl, ScaleControl } from "svelte-maplibre";
   import type { Map } from "maplibre-gl";
 
-  interface Props {
-    map: Map | undefined;
-  }
+  let { map }: { map: Map | undefined } = $props();
 
-  let { map }: Props = $props();
-
-  run(() => {
+  $effect(() => {
     if (map) {
       map.keyboard.disableRotation();
       map.dragRotate.disable();

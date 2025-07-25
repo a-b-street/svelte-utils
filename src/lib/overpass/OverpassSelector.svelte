@@ -1,32 +1,24 @@
 <script lang="ts">
   import type { Feature, Polygon } from "geojson";
   import type { LngLat, Map } from "maplibre-gl";
-  import { createEventDispatcher } from "svelte";
   import { overpassQueryForPolygon } from "./index.js";
   import { PolygonTool, PolygonControls } from "maplibre-draw-polygon";
   import { downloadGeneratedFile, Checkbox } from "../index.js";
 
   interface Props {
-    map: Map | null;
+    map: Map | undefined;
+    onloading?: (msg: string) => void;
+    gotXml?: (xml: string, boundary: Feature<Polygon>) => void;
+    onerror?: (msg: string) => void;
   }
-
-  let { map }: Props = $props();
-
-  const dispatch = createEventDispatcher<{
-    loading: string;
-    gotXml: {
-      xml: string;
-      boundary: Feature<Polygon>;
-    };
-    error: string;
-  }>();
+  let { map, onloading, gotXml, onerror }: Props = $props();
 
   let polygonTool: PolygonTool | null = $state(null);
   let saveCopy = $state(false);
 
   async function importPolygon(boundaryGj: Feature<Polygon>) {
     try {
-      dispatch("loading", "Loading from Overpass");
+      onloading?.("Loading from Overpass");
       let resp = await fetch(overpassQueryForPolygon(boundaryGj));
       let osmXml = await resp.text();
 
@@ -34,9 +26,9 @@
         downloadGeneratedFile("osm.xml", osmXml);
       }
 
-      dispatch("gotXml", { xml: osmXml, boundary: boundaryGj });
+      gotXml?.(osmXml, boundaryGj);
     } catch (err: any) {
-      dispatch("error", err.toString());
+      onerror?.(err.toString());
     }
   }
 
@@ -70,7 +62,7 @@
       return;
     }
     if (map.getZoom() < 13) {
-      dispatch("error", "Zoom in more to import");
+      onerror?.("Zoom in more to import");
       return;
     }
     await importPolygon(mapBoundsToGeojson());

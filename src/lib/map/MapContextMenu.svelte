@@ -1,20 +1,14 @@
 <script lang="ts">
-  import { run } from "svelte/legacy";
-
   import { onDestroy } from "svelte";
   import { Popup, type Map, type MapMouseEvent } from "maplibre-gl";
   import { MapEvents } from "svelte-maplibre";
 
-  interface Props {
-    map: Map | undefined;
-  }
-
-  let { map }: Props = $props();
+  let { map }: { map: Map | undefined } = $props();
 
   let contents: HTMLDivElement | undefined = $state();
   let popup = new Popup({ closeButton: false, className: "popup-box" });
 
-  run(() => {
+  $effect(() => {
     if (contents) {
       popup.setDOMContent(contents);
     }

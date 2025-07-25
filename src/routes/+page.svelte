@@ -8,14 +8,13 @@
     MapContextMenu,
   } from "../lib/map/index.js";
 
-  let style = $state(basemapStyles["Maptiler Dataviz"]);
+  let basemap = $state("Maptiler Dataviz");
+  let style = $derived(basemapStyles[basemap]);
 </script>
 
 <Layout>
   {#snippet left()}
-    <div>
-      <h1>svelte-utils demo</h1>
-    </div>
+    <h1>svelte-utils demo</h1>
   {/snippet}
 
   {#snippet main()}
@@ -29,7 +28,7 @@
         {#snippet children({ map })}
           <StandardControls {map} />
           <MapContextMenu {map} />
-          <Basemaps bind:style choice="Maptiler Dataviz" />
+          <Basemaps bind:basemap />
         {/snippet}
       </MapLibre>
     </div>

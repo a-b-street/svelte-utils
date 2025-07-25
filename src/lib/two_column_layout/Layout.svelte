@@ -1,7 +1,8 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
   interface Props {
-    left?: import("svelte").Snippet;
-    main?: import("svelte").Snippet;
+    left?: Snippet;
+    main?: Snippet;
   }
 
   let { left, main }: Props = $props();

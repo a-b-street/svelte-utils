@@ -1,9 +1,11 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
   import { mapContents, sidebarContents, topContents } from "./index.js";
+
   interface Props {
-    top?: import("svelte").Snippet;
-    sidebar?: import("svelte").Snippet;
-    map?: import("svelte").Snippet;
+    top?: Snippet;
+    sidebar?: Snippet;
+    map?: Snippet;
   }
 
   let { top, sidebar, map }: Props = $props();

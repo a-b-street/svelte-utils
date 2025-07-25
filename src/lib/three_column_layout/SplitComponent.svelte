@@ -1,13 +1,15 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
   import {
     mapContents,
     leftSidebarContents,
     rightSidebarContents,
   } from "./index.js";
+
   interface Props {
-    left?: import("svelte").Snippet;
-    map?: import("svelte").Snippet;
-    right?: import("svelte").Snippet;
+    left?: Snippet;
+    map?: Snippet;
+    right?: Snippet;
   }
 
   let { left, map, right }: Props = $props();

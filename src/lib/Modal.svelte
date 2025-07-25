@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from "svelte/legacy";
-
   interface Props {
     show?: boolean;
     children?: import("svelte").Snippet;
@@ -11,7 +9,7 @@
   // Relies on external styling (picocss)
   let modalDialog: HTMLDialogElement | undefined = $state();
 
-  run(() => {
+  $effect(() => {
     if (modalDialog) {
       if (show) {
         modalDialog.showModal();

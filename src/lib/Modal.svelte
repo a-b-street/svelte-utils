@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run, stopPropagation } from "svelte/legacy";
+  import { run } from "svelte/legacy";
 
   interface Props {
     show?: boolean;
@@ -24,6 +24,7 @@
   function onClick(e: MouseEvent) {
     // only dismiss the modal when clicking outside of the inner dialog content, on the dialog itself.
     if (e.target == modalDialog) {
+      e.stopPropagation();
       show = false;
     }
   }
@@ -37,11 +38,7 @@
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<dialog
-  bind:this={modalDialog}
-  onclick={stopPropagation(onClick)}
-  onkeydown={onKeyDown}
->
+<dialog bind:this={modalDialog} onclick={onClick} onkeydown={onKeyDown}>
   <div>
     {@render children?.()}
   </div>

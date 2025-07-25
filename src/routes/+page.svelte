@@ -22,9 +22,8 @@
     <div style="position:relative; width: 100%; height: 100vh;">
       <MapLibre
         {style}
-        on:error={(e) => {
-          // @ts-ignore ErrorEvent isn't exported
-          console.log(e.detail.error);
+        onerror={(e) => {
+          console.log(e.error);
         }}
       >
         {#snippet children({ map })}

@@ -26,9 +26,9 @@
     }
   });
 
-  function onRightClick(e: CustomEvent<MapMouseEvent>) {
+  function onRightClick(e: MapMouseEvent) {
     if (map) {
-      popup.setLngLat(e.detail.lngLat).addTo(map);
+      popup.setLngLat(e.lngLat).addTo(map);
     }
   }
 
@@ -50,7 +50,7 @@
   }
 </script>
 
-<MapEvents on:contextmenu={onRightClick} />
+<MapEvents oncontextmenu={onRightClick} />
 
 <div bind:this={contents}>
   <div class="d-grid gap-2">

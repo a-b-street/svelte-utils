@@ -14,7 +14,6 @@ import type {
 
 export { default as Basemaps } from "./Basemaps.svelte";
 export { default as MapContextMenu } from "./MapContextMenu.svelte";
-export { default as Popup } from "./Popup.svelte";
 export { default as StandardControls } from "./StandardControls.svelte";
 
 export const isPolygon: ExpressionSpecification = [

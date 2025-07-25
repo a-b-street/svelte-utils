@@ -1,18 +1,30 @@
 <script lang="ts">
+  import { run } from "svelte/legacy";
+
   import type { StyleSpecification } from "maplibre-gl";
   import { basemapStyles } from "./index.js";
 
-  // Input
-  export let choice: string;
-  export let bottom = "60px";
-  // Output
-  export let style: string | StyleSpecification = basemapStyles[choice];
+  interface Props {
+    // Input
+    choice: string;
+    bottom?: string;
+    // Output
+    style?: string | StyleSpecification;
+  }
 
-  $: style = basemapStyles[choice];
+  let {
+    choice = $bindable(),
+    bottom = "60px",
+    style = $bindable(basemapStyles[choice]),
+  }: Props = $props();
+
+  run(() => {
+    style = basemapStyles[choice];
+  });
 </script>
 
 <div style:bottom>
-  <!-- svelte-ignore a11y-missing-content -->
+  <!-- svelte-ignore a11y_missing_content -->
   <h5 class="fa-solid fa-layer-group me-2 align-self-center"></h5>
   <select class="form-select" bind:value={choice}>
     {#each Object.keys(basemapStyles) as value}

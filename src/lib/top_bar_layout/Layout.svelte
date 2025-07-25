@@ -1,13 +1,23 @@
+<script lang="ts">
+  interface Props {
+    top?: import("svelte").Snippet;
+    left?: import("svelte").Snippet;
+    main?: import("svelte").Snippet;
+  }
+
+  let { top, left, main }: Props = $props();
+</script>
+
 <div class="flex-container">
   <div class="top">
-    <slot name="top" />
+    {@render top?.()}
   </div>
   <div class="content">
     <div class="left">
-      <slot name="left" />
+      {@render left?.()}
     </div>
     <div class="main">
-      <slot name="main" />
+      {@render main?.()}
     </div>
   </div>
 </div>

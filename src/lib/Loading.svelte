@@ -1,8 +1,11 @@
 <script lang="ts">
-  // Block the rest of the page while 'loading' is non-empty
+  interface Props {
+    // Block the rest of the page while 'loading' is non-empty
+    loading: string;
+    progress?: number | null;
+  }
 
-  export let loading: string;
-  export let progress: number | null = null;
+  let { loading, progress = null }: Props = $props();
 </script>
 
 {#if loading}

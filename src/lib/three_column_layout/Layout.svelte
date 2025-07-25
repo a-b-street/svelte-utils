@@ -1,11 +1,21 @@
+<script lang="ts">
+  interface Props {
+    left?: import("svelte").Snippet;
+    main?: import("svelte").Snippet;
+    right?: import("svelte").Snippet;
+  }
+
+  let { left, main, right }: Props = $props();
+</script>
+
 <div class="left">
-  <slot name="left" />
+  {@render left?.()}
 </div>
 <div class="main">
-  <slot name="main" />
+  {@render main?.()}
 </div>
 <div class="right">
-  <slot name="right" />
+  {@render right?.()}
 </div>
 
 <style>

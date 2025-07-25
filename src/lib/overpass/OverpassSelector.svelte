@@ -6,7 +6,11 @@
   import { PolygonTool, PolygonControls } from "maplibre-draw-polygon";
   import { downloadGeneratedFile, Checkbox } from "../index.js";
 
-  export let map: Map | null;
+  interface Props {
+    map: Map | null;
+  }
+
+  let { map }: Props = $props();
 
   const dispatch = createEventDispatcher<{
     loading: string;
@@ -17,8 +21,8 @@
     error: string;
   }>();
 
-  let polygonTool: PolygonTool | null = null;
-  let saveCopy = false;
+  let polygonTool: PolygonTool | null = $state(null);
+  let saveCopy = $state(false);
 
   async function importPolygon(boundaryGj: Feature<Polygon>) {
     try {
@@ -91,13 +95,13 @@
 {#if polygonTool}
   <PolygonControls {polygonTool} />
 {:else}
-  <button class="btn btn-primary" type="button" on:click={importCurrentView}>
+  <button class="btn btn-primary" type="button" onclick={importCurrentView}>
     Import current view
   </button>
 
   <p class="fst-italic my-3">or...</p>
 
-  <button class="btn btn-primary" type="button" on:click={startPolygonTool}>
+  <button class="btn btn-primary" type="button" onclick={startPolygonTool}>
     Draw an area to import on the map
   </button>
 {/if}

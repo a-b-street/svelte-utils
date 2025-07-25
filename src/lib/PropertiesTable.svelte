@@ -1,7 +1,10 @@
 <script lang="ts">
-  // Useful for quickly debugging a feature
+  interface Props {
+    // Useful for quickly debugging a feature
+    properties: { [name: string]: any };
+  }
 
-  export let properties: { [name: string]: any };
+  let { properties }: Props = $props();
 </script>
 
 <table>

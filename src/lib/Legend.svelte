@@ -1,8 +1,12 @@
 <script lang="ts">
   // Vertical layout, for qualitative color schemes
 
-  // (Label, color) pairs
-  export let rows: [string, string][];
+  interface Props {
+    // (Label, color) pairs
+    rows: [string, string][];
+  }
+
+  let { rows }: Props = $props();
 </script>
 
 <ul>

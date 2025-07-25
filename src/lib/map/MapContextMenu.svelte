@@ -1,16 +1,24 @@
 <script lang="ts">
+  import { run } from "svelte/legacy";
+
   import { onDestroy } from "svelte";
   import { Popup, type Map, type MapMouseEvent } from "maplibre-gl";
   import { MapEvents } from "svelte-maplibre";
 
-  export let map: Map | undefined;
+  interface Props {
+    map: Map | undefined;
+  }
 
-  let contents: HTMLDivElement | undefined;
+  let { map }: Props = $props();
+
+  let contents: HTMLDivElement | undefined = $state();
   let popup = new Popup({ closeButton: false, className: "popup-box" });
 
-  $: if (contents) {
-    popup.setDOMContent(contents);
-  }
+  run(() => {
+    if (contents) {
+      popup.setDOMContent(contents);
+    }
+  });
 
   onDestroy(() => {
     if (map && popup?.isOpen()) {
@@ -46,10 +54,10 @@
 
 <div bind:this={contents}>
   <div class="d-grid gap-2">
-    <button class="btn btn-primary" on:click={openStreetview}>
+    <button class="btn btn-primary" onclick={openStreetview}>
       Streetview
     </button>
-    <button class="btn btn-primary" on:click={openOSM}>OSM</button>
+    <button class="btn btn-primary" onclick={openOSM}>OSM</button>
   </div>
 </div>
 

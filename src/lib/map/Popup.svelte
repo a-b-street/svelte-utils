@@ -5,8 +5,13 @@
   import type { Feature } from "geojson";
   import { Popup } from "svelte-maplibre";
 
-  // TODO Maybe set openIfTopMost and other props, or pass them through
-  export let openOn: "hover" | "click" = "hover";
+  interface Props {
+    // TODO Maybe set openIfTopMost and other props, or pass them through
+    openOn?: "hover" | "click";
+    children?: import("svelte").Snippet<[any]>;
+  }
+
+  let { openOn = "hover", children }: Props = $props();
 
   function getProperties(features: Feature[] | null): { [name: string]: any } {
     if (!features) {
@@ -15,8 +20,12 @@
     }
     return features[0].properties ?? {};
   }
+
+  const children_render = $derived(children);
 </script>
 
-<Popup {openOn} let:features>
-  <slot props={getProperties(features)} {features} />
+<Popup {openOn}>
+  {#snippet children({ features })}
+    {@render children_render?.({ props: getProperties(features), features })}
+  {/snippet}
 </Popup>

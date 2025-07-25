@@ -1,9 +1,17 @@
 <script lang="ts">
-  export let labelColors: Record<string, string>;
-  export let swatchClass: "rectangle" | "circle" = "rectangle";
-  export let itemsPerRow: 1 | 2 | 3 | 4 = 2;
+  interface Props {
+    labelColors: Record<string, string>;
+    swatchClass?: "rectangle" | "circle";
+    itemsPerRow?: 1 | 2 | 3 | 4;
+  }
 
-  $: gridItemWidth = `${100 / itemsPerRow}%`;
+  let {
+    labelColors,
+    swatchClass = "rectangle",
+    itemsPerRow = 2,
+  }: Props = $props();
+
+  let gridItemWidth = $derived(`${100 / itemsPerRow}%`);
 </script>
 
 <div

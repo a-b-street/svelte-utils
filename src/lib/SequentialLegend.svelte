@@ -1,9 +1,18 @@
 <script lang="ts">
-  export let colorScale: string[];
   type IntoLabel = string | number;
-  export let labels: { limits: IntoLabel[] } | { buckets: IntoLabel[] };
-  export let decimalPlaces = 0;
-  export let fullWidthBucketLegend = false;
+  interface Props {
+    colorScale: string[];
+    labels: { limits: IntoLabel[] } | { buckets: IntoLabel[] };
+    decimalPlaces?: number;
+    fullWidthBucketLegend?: boolean;
+  }
+
+  let {
+    colorScale,
+    labels,
+    decimalPlaces = 0,
+    fullWidthBucketLegend = false,
+  }: Props = $props();
 
   function labelTexts(
     labels: { limits: IntoLabel[] } | { buckets: IntoLabel[] },

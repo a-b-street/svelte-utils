@@ -1,10 +1,17 @@
 <script lang="ts">
-  export let show = false;
+  import { run, stopPropagation } from "svelte/legacy";
+
+  interface Props {
+    show?: boolean;
+    children?: import("svelte").Snippet;
+  }
+
+  let { show = $bindable(false), children }: Props = $props();
 
   // Relies on external styling (picocss)
-  let modalDialog: HTMLDialogElement | undefined;
+  let modalDialog: HTMLDialogElement | undefined = $state();
 
-  $: {
+  run(() => {
     if (modalDialog) {
       if (show) {
         modalDialog.showModal();
@@ -12,7 +19,7 @@
         modalDialog.close();
       }
     }
-  }
+  });
 
   function onClick(e: MouseEvent) {
     // only dismiss the modal when clicking outside of the inner dialog content, on the dialog itself.
@@ -29,14 +36,14 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <dialog
   bind:this={modalDialog}
-  on:click|stopPropagation={onClick}
-  on:keydown={onKeyDown}
+  onclick={stopPropagation(onClick)}
+  onkeydown={onKeyDown}
 >
   <div>
-    <slot />
+    {@render children?.()}
   </div>
 </dialog>
 

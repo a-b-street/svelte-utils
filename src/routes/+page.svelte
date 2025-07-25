@@ -8,28 +8,33 @@
     MapContextMenu,
   } from "../lib/map/index.js";
 
-  let style = basemapStyles["Maptiler Dataviz"];
+  let style = $state(basemapStyles["Maptiler Dataviz"]);
 </script>
 
 <Layout>
-  <div slot="left">
-    <h1>svelte-utils demo</h1>
-  </div>
+  {#snippet left()}
+    <div>
+      <h1>svelte-utils demo</h1>
+    </div>
+  {/snippet}
 
-  <div slot="main" style="position:relative; width: 100%; height: 100vh;">
-    <MapLibre
-      {style}
-      on:error={(e) => {
-        // @ts-ignore ErrorEvent isn't exported
-        console.log(e.detail.error);
-      }}
-      let:map
-    >
-      <StandardControls {map} />
-      <MapContextMenu {map} />
-      <Basemaps bind:style choice="Maptiler Dataviz" />
-    </MapLibre>
-  </div>
+  {#snippet main()}
+    <div style="position:relative; width: 100%; height: 100vh;">
+      <MapLibre
+        {style}
+        on:error={(e) => {
+          // @ts-ignore ErrorEvent isn't exported
+          console.log(e.detail.error);
+        }}
+      >
+        {#snippet children({ map })}
+          <StandardControls {map} />
+          <MapContextMenu {map} />
+          <Basemaps bind:style choice="Maptiler Dataviz" />
+        {/snippet}
+      </MapLibre>
+    </div>
+  {/snippet}
 </Layout>
 
 <style>

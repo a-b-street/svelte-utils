@@ -1,6 +1,6 @@
 <script lang="ts">
   import { GeoJSON, MapLibre, LineLayer } from "svelte-maplibre";
-  import { Layout } from "../lib/two_column_layout/index.js";
+  import { Layout } from "../lib/two_column_layout/index.svelte.js";
   import {
     basemapStyles,
     Basemaps,

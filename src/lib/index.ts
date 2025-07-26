@@ -18,16 +18,6 @@ export function downloadGeneratedFile(filename: string, textInput: string) {
   document.body.removeChild(element);
 }
 
-// Hack around
-// https://stackoverflow.com/questions/67336062/typescript-not-parsed-in-svelte-html-section
-// until we're using Svelte 5
-export function notNull<T>(x: T | null | undefined): T {
-  if (x == null || x == undefined) {
-    throw new Error("Oops, notNull given something null");
-  }
-  return x;
-}
-
 // Fetch a URL and return bytes. Along the way, calls setProgress with a number
 // [0, 100] -- but sometimes over 100 when the file is compressed. This
 // function will throw if the server doesn't send back a Content-Length header.

@@ -1,21 +1,21 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
-  import { mapContents, sidebarContents } from "./index.js";
+  import { mainContents, leftContents } from "./index.js";
 
   interface Props {
-    sidebar?: Snippet;
-    map?: Snippet;
+    left?: Snippet;
+    main?: Snippet;
   }
 
-  let { sidebar, map }: Props = $props();
+  let { left, main }: Props = $props();
 
   // The kinda weird hack is that this must itself be nested underneath the
-  // MapLibre bit, so it has context. The sidebar is the "remote" part.
+  // MapLibre bit, so it has context. The left is the "remote" part.
 </script>
 
-<div bind:this={$sidebarContents}>
-  {@render sidebar?.()}
+<div bind:this={$leftContents}>
+  {@render left?.()}
 </div>
-<div bind:this={$mapContents}>
-  {@render map?.()}
+<div bind:this={$mainContents}>
+  {@render main?.()}
 </div>

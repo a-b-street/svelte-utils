@@ -4,5 +4,5 @@ export { default as Layout } from "./Layout.svelte";
 export { default as SplitComponent } from "./SplitComponent.svelte";
 
 export let topContents: Writable<HTMLDivElement | null> = writable(null);
-export let sidebarContents: Writable<HTMLDivElement | null> = writable(null);
-export let mapContents: Writable<HTMLDivElement | null> = writable(null);
+export let leftContents: Writable<HTMLDivElement | null> = writable(null);
+export let mainContents: Writable<HTMLDivElement | null> = writable(null);

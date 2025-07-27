@@ -1,10 +1,6 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
-  import {
-    mainContents,
-    leftSidebarContents,
-    rightSidebarContents,
-  } from "./index.js";
+  import { mainContents, leftContents, rightContents } from "./index.svelte.js";
 
   interface Props {
     left?: Snippet;
@@ -18,12 +14,12 @@
   // MapLibre bit, so it has context. The left and right are the "remote" parts.
 </script>
 
-<div bind:this={$leftSidebarContents}>
+<div bind:this={leftContents.value}>
   {@render left?.()}
 </div>
-<div bind:this={$mainContents}>
+<div bind:this={mainContents.value}>
   {@render main?.()}
 </div>
-<div bind:this={$rightSidebarContents}>
+<div bind:this={rightContents.value}>
   {@render right?.()}
 </div>

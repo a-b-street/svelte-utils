@@ -1,13 +1,39 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import {
+    topContents,
+    leftContents,
+    mainContents,
+    topTarget,
+    leftTarget,
+    mainTarget,
+  } from "./index.svelte.js";
 
   interface Props {
     top?: Snippet;
     left?: Snippet;
     main?: Snippet;
   }
-
   let { top, left, main }: Props = $props();
+
+  $effect(() => {
+    if (topTarget.value && topContents.value) {
+      topTarget.value.innerHTML = "";
+      topTarget.value.appendChild(topContents.value);
+    }
+  });
+  $effect(() => {
+    if (leftTarget.value && leftContents.value) {
+      leftTarget.value.innerHTML = "";
+      leftTarget.value.appendChild(leftContents.value);
+    }
+  });
+  $effect(() => {
+    if (mainTarget.value && mainContents.value) {
+      mainTarget.value.innerHTML = "";
+      mainTarget.value.appendChild(mainContents.value);
+    }
+  });
 </script>
 
 <div class="flex-container">

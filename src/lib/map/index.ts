@@ -11,6 +11,7 @@ import type {
   DataDrivenPropertyValueSpecification,
   ExpressionSpecification,
 } from "maplibre-gl";
+import { SvelteMap } from "svelte/reactivity";
 
 export { default as Basemaps } from "./Basemaps.svelte";
 export { default as MapContextMenu } from "./MapContextMenu.svelte";
@@ -101,41 +102,63 @@ let maptilerKey = "MZEJTanw3WpxRvt7qDfo";
 let glyphs = `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${maptilerKey}`;
 
 // A set of basemaps that work reasonably well in many projects
-export let basemapStyles: Record<string, string | StyleSpecification> = {
-  Blank: {
-    version: 8,
-    sources: {},
-    layers: [],
-    glyphs,
-  },
-  "Maptiler Streets": `https://api.maptiler.com/maps/streets-v2/style.json?key=${maptilerKey}`,
-  "Maptiler Dataviz": `https://api.maptiler.com/maps/dataviz/style.json?key=${maptilerKey}`,
-  "Maptiler Hybrid": `https://api.maptiler.com/maps/hybrid/style.json?key=${maptilerKey}`,
-  "Maptiler OpenStreetMap": `https://api.maptiler.com/maps/openstreetmap/style.json?key=${maptilerKey}`,
-  "Maptiler OS Open Zoomstack": `https://api.maptiler.com/maps/uk-openzoomstack-light/style.json?key=${maptilerKey}`,
-  "ESRI World Imagery": {
-    version: 8,
-    sources: {
-      "raster-tiles": {
-        type: "raster",
-        tiles: [
-          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        ],
-        tileSize: 256,
-        // See https://wiki.openstreetmap.org/wiki/Esri
-        attribution:
-          "ESRI &copy; <a href='http://www.esri.com' target='_blank'>ESRI</a>",
-        minzoom: 0,
-        maxzoom: 18,
-      },
-    },
-    layers: [
+export let basemapStyles: SvelteMap<string, string | StyleSpecification> =
+  new SvelteMap([
+    [
+      "Blank",
       {
-        id: "raster-basemap",
-        type: "raster",
-        source: "raster-tiles",
+        version: 8,
+        sources: {},
+        layers: [],
+        glyphs,
       },
     ],
-    glyphs,
-  },
-};
+    [
+      "Maptiler Streets",
+      `https://api.maptiler.com/maps/streets-v2/style.json?key=${maptilerKey}`,
+    ],
+    [
+      "Maptiler Dataviz",
+      `https://api.maptiler.com/maps/dataviz/style.json?key=${maptilerKey}`,
+    ],
+    [
+      "Maptiler Hybrid",
+      `https://api.maptiler.com/maps/hybrid/style.json?key=${maptilerKey}`,
+    ],
+    [
+      "Maptiler OpenStreetMap",
+      `https://api.maptiler.com/maps/openstreetmap/style.json?key=${maptilerKey}`,
+    ],
+    [
+      "Maptiler OS Open Zoomstack",
+      `https://api.maptiler.com/maps/uk-openzoomstack-light/style.json?key=${maptilerKey}`,
+    ],
+    [
+      "ESRI World Imagery",
+      {
+        version: 8,
+        sources: {
+          "raster-tiles": {
+            type: "raster",
+            tiles: [
+              "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            ],
+            tileSize: 256,
+            // See https://wiki.openstreetmap.org/wiki/Esri
+            attribution:
+              "ESRI &copy; <a href='http://www.esri.com' target='_blank'>ESRI</a>",
+            minzoom: 0,
+            maxzoom: 18,
+          },
+        },
+        layers: [
+          {
+            id: "raster-basemap",
+            type: "raster",
+            source: "raster-tiles",
+          },
+        ],
+        glyphs,
+      },
+    ],
+  ] as Array<[string, string | StyleSpecification]>);

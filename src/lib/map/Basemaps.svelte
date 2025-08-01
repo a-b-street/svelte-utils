@@ -13,7 +13,7 @@
   <!-- svelte-ignore a11y_missing_content -->
   <h5 class="fa-solid fa-layer-group me-2 align-self-center"></h5>
   <select class="form-select" bind:value={basemap}>
-    {#each Object.keys(basemapStyles) as value}
+    {#each basemapStyles.keys() as value}
       <option {value}>{value}</option>
     {/each}
   </select>

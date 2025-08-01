@@ -9,7 +9,7 @@
   } from "../lib/map/index.js";
 
   let basemap = $state("Maptiler Dataviz");
-  let style = $derived(basemapStyles[basemap]);
+  let style = $derived(basemapStyles.get(basemap)!);
 </script>
 
 <Layout>

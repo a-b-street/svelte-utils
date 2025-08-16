@@ -5,6 +5,7 @@
   import { maptilerKey } from "./index.js";
   import { onDestroy } from "svelte";
 
+  // Callers may want to override the position of :global(.maplibregl-ctrl-geocoder)
   interface Props {
     map: Map | undefined;
     loaded: boolean;
@@ -69,11 +70,3 @@
     }
   });
 </script>
-
-<style>
-  :global(.maplibregl-ctrl-geocoder) {
-    position: absolute;
-    top: 10px;
-    left: 50px;
-  }
-</style>

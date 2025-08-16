@@ -7,9 +7,10 @@
 
   interface Props {
     map: Map | undefined;
+    loaded: boolean;
     country?: string;
   }
-  let { map, country }: Props = $props();
+  let { map, loaded, country }: Props = $props();
 
   let gc: GeocodingControl | undefined = $state();
 
@@ -42,7 +43,7 @@
   });
 
   $effect(() => {
-    if (map && !gc) {
+    if (map && loaded && !gc) {
       // TODO There's no TS for these options, but I think they're right...
       gc = new GeocodingControl({
         apiKey: maptilerKey,

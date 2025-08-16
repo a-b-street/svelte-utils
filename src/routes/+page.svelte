@@ -26,11 +26,11 @@
           console.log(e.error);
         }}
       >
-        {#snippet children({ map })}
+        {#snippet children({ map, loaded })}
           <StandardControls {map} />
           <MapContextMenu {map} />
           <Basemaps bind:basemap />
-          <Geocoder {map} />
+          <Geocoder {map} {loaded} />
         {/snippet}
       </MapLibre>
     </div>

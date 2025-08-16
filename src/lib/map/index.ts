@@ -14,6 +14,7 @@ import type {
 import { SvelteMap } from "svelte/reactivity";
 
 export { default as Basemaps } from "./Basemaps.svelte";
+export { default as Geocoder } from "./Geocoder.svelte";
 export { default as MapContextMenu } from "./MapContextMenu.svelte";
 export { default as StandardControls } from "./StandardControls.svelte";
 
@@ -96,7 +97,7 @@ export function bbox(gj: GeoJSON): [number, number, number, number] {
 }
 
 // Only for use in A/B Street projects
-let maptilerKey = "MZEJTanw3WpxRvt7qDfo";
+export let maptilerKey = "MZEJTanw3WpxRvt7qDfo";
 
 // We always need these, even in blank or raster styles
 let glyphs = `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${maptilerKey}`;

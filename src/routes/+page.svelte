@@ -6,6 +6,7 @@
     Basemaps,
     StandardControls,
     MapContextMenu,
+    Geocoder,
   } from "../lib/map/index.js";
 
   let basemap = $state("Maptiler Dataviz");
@@ -29,6 +30,7 @@
           <StandardControls {map} />
           <MapContextMenu {map} />
           <Basemaps bind:basemap />
+          <Geocoder {map} />
         {/snippet}
       </MapLibre>
     </div>

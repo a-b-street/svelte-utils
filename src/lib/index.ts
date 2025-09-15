@@ -63,3 +63,11 @@ export async function fetchWithProgress(
 
   return allChunks;
 }
+
+export function stripPrefix(value: string, prefix: string): string {
+  return value.startsWith(prefix) ? value.slice(prefix.length) : value;
+}
+
+export function stripSuffix(value: string, suffix: string): string {
+  return value.endsWith(suffix) ? value.slice(0, -suffix.length) : value;
+}

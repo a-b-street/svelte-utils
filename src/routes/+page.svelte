@@ -28,7 +28,13 @@
       >
         {#snippet children({ map, loaded })}
           <StandardControls {map} />
-          <MapContextMenu {map} />
+          <MapContextMenu {map}>
+            {#snippet children({ position })}
+              <button onclick={() => window.alert(position)}
+                >Custom control</button
+              >
+            {/snippet}
+          </MapContextMenu>
           <Basemaps bind:basemap />
           <Geocoder {map} {loaded} />
         {/snippet}

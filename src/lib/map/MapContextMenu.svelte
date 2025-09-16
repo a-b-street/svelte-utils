@@ -1,12 +1,18 @@
 <script lang="ts">
-  import { onDestroy } from "svelte";
-  import { Popup, type Map, type MapMouseEvent } from "maplibre-gl";
+  import { onDestroy, type Snippet } from "svelte";
+  import { Popup, LngLat, type Map, type MapMouseEvent } from "maplibre-gl";
   import { MapEvents } from "svelte-maplibre";
 
-  let { map }: { map: Map | undefined } = $props();
+  let {
+    map,
+    children,
+  }: { map: Map | undefined; children?: Snippet<[{ position: LngLat }]> } =
+    $props();
 
   let contents: HTMLDivElement | undefined = $state();
   let popup = new Popup({ closeButton: false, className: "popup-box" });
+  // TODO A weird indirection. Could we instead construct contents only once popup is set?
+  let position: LngLat | undefined = $state();
 
   $effect(() => {
     if (contents) {
@@ -22,6 +28,7 @@
 
   function onRightClick(e: MapMouseEvent) {
     if (map) {
+      position = e.lngLat;
       popup.setLngLat(e.lngLat).addTo(map);
     }
   }
@@ -51,7 +58,10 @@
     <button class="btn btn-primary" onclick={openStreetview}>
       Streetview
     </button>
+
     <button class="btn btn-primary" onclick={openOSM}>OSM</button>
+
+    {@render children?.({ position: position! })}
   </div>
 </div>
 

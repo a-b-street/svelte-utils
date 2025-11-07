@@ -151,7 +151,7 @@ export let basemapStyles: SvelteMap<string, string | StyleSpecification> =
             tileSize: 256,
             // See https://wiki.openstreetmap.org/wiki/Esri
             attribution:
-              "ESRI &copy; <a href='http://www.esri.com' target='_blank'>ESRI</a>",
+              "ESRI &copy; <a href='https://www.esri.com' target='_blank'>ESRI</a>",
             minzoom: 0,
             maxzoom: 18,
           },

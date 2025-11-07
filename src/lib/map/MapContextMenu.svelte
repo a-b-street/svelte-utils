@@ -36,7 +36,7 @@
   function openStreetview() {
     let { lng, lat } = popup.getLngLat();
     window.open(
-      `http://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}&cbp=11,0,0,0,0`,
+      `https://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}&cbp=11,0,0,0,0`,
       "_blank",
     );
   }

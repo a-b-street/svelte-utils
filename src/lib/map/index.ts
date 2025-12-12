@@ -72,9 +72,9 @@ export function evaluateRamp<OutputType>(
   limits: number[],
   output: OutputType[],
 ): OutputType {
-  for (let [idx, limit] of limits.entries()) {
-    if (input <= limit) {
-      return output[idx];
+  for (let [idx, value] of output.entries()) {
+    if (input <= limits[idx]) {
+      return value;
     }
   }
   return output[output.length - 1];

@@ -66,6 +66,20 @@ export function makeRamp<OutputType>(
   return step as DataDrivenPropertyValueSpecification<OutputType>;
 }
 
+// Does the same thing as makeRamp for a particular input
+export function evaluateRamp<OutputType>(
+  input: number,
+  limits: number[],
+  output: OutputType[],
+): OutputType {
+  for (let [idx, limit] of limits.entries()) {
+    if (input <= limit) {
+      return output[idx];
+    }
+  }
+  return output[output.length - 1];
+}
+
 // Create a feature for a point, with no properties.
 export function pointFeature(pt: Position): Feature<Point> {
   return {

@@ -43,7 +43,7 @@
 
   function openOSM() {
     if (map) {
-        console.log(`https://www.openstreetmap.org/#map=${getViewportHash(map)}`);
+      console.log(`https://www.openstreetmap.org/#map=${getViewportHash(map)}`);
       window.open(
         `https://www.openstreetmap.org/#map=${getViewportHash(map)}`,
         "_blank",

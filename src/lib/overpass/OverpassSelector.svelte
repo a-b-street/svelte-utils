@@ -20,6 +20,11 @@
     try {
       onloading?.("Loading from Overpass");
       let resp = await fetch(overpassQueryForPolygon(boundaryGj));
+      if (!resp.ok) {
+        throw new Error(
+          `Overpass response is not OK: ${resp.status}. The API is often overloaded; try again in a few seconds.`,
+        );
+      }
       let osmXml = await resp.text();
 
       if (saveCopy) {

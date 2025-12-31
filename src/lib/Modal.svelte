@@ -1,12 +1,16 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
+
   interface Props {
-    show?: boolean;
-    children?: import("svelte").Snippet;
+    show: boolean;
+    children: Snippet;
+    closeable?: boolean;
   }
+  // TODO https://caniuse.com/wf-dialog-closedby not supported yet
 
-  let { show = $bindable(false), children }: Props = $props();
+  let { show = $bindable(false), children, closeable = true }: Props = $props();
 
-  // Relies on external styling (picocss)
+  // Relies on external styling
   let modalDialog: HTMLDialogElement | undefined = $state();
 
   $effect(() => {
@@ -23,22 +27,31 @@
     // only dismiss the modal when clicking outside of the inner dialog content, on the dialog itself.
     if (e.target == modalDialog) {
       e.stopPropagation();
-      show = false;
+      if (closeable) {
+        show = false;
+      }
     }
   }
 
   function onKeyDown(e: KeyboardEvent) {
     if (e.key == "Escape" || e.key == "Enter") {
       e.stopPropagation();
-      show = false;
+      if (closeable) {
+        show = false;
+      }
     }
   }
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<dialog bind:this={modalDialog} onclick={onClick} onkeydown={onKeyDown}>
+<dialog
+  bind:this={modalDialog}
+  onclick={onClick}
+  onkeydown={onKeyDown}
+  closedby="none"
+>
   <div>
-    {@render children?.()}
+    {@render children()}
   </div>
 </dialog>
 

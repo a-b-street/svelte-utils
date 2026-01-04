@@ -1,6 +1,6 @@
 import type { Feature, Polygon, MultiPolygon } from "geojson";
 
-export { default as OverpassSelector } from "./OverpassSelector.svelte";
+export { default as OsmLoader } from "./OsmLoader.svelte";
 
 // Construct a query to extract all XML data in the polygon clip. See
 // https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL. Note polygon

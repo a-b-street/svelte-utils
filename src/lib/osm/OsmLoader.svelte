@@ -1,20 +1,32 @@
 <script lang="ts">
   import type { Feature, Polygon } from "geojson";
   import type { LngLat, Map } from "maplibre-gl";
-  import { overpassQueryForPolygon } from "./index.js";
   import { PolygonTool, PolygonControls } from "maplibre-draw-polygon";
+  import { overpassQueryForPolygon } from "./index.js";
   import { downloadGeneratedFile, Checkbox } from "../index.js";
 
+  // The caller must put PolygonToolLayer in the map
   interface Props {
     map: Map | undefined;
     onloading?: (msg: string) => void;
-    gotXml?: (xml: string, boundary: Feature<Polygon>) => void;
+    onload: (osmInput: Uint8Array, boundary: Feature<Polygon> | null) => void;
     onerror?: (msg: string) => void;
   }
-  let { map, onloading, gotXml, onerror }: Props = $props();
+  let { map, onloading, onload, onerror }: Props = $props();
 
   let polygonTool: PolygonTool | null = $state(null);
   let saveCopy = $state(false);
+  let fileInput: HTMLInputElement | undefined = $state();
+
+  async function loadFile(e: Event) {
+    try {
+      onloading?.("Loading from file");
+      let bytes = await fileInput!.files![0].arrayBuffer();
+      onload(new Uint8Array(bytes), null);
+    } catch (err) {
+      onerror?.(`Bad input file: ${err}`);
+    }
+  }
 
   async function importPolygon(boundaryGj: Feature<Polygon>) {
     try {
@@ -25,13 +37,14 @@
           `Overpass response is not OK: ${resp.status}. The API is often overloaded; try again in a few seconds.`,
         );
       }
-      let osmXml = await resp.text();
+      let osmXml = await resp.bytes();
 
       if (saveCopy) {
-        downloadGeneratedFile("osm.xml", osmXml);
+        let text = new TextDecoder().decode(osmXml);
+        downloadGeneratedFile("osm.xml", text);
       }
 
-      gotXml?.(osmXml, boundaryGj);
+      onload(new Uint8Array(osmXml), boundaryGj);
     } catch (err: any) {
       onerror?.(err.toString());
     }
@@ -88,6 +101,20 @@
     });
   }
 </script>
+
+<div>
+  <label class="form-label">
+    Load an osm.pbf or osm.xml file
+    <input
+      class="form-control"
+      bind:this={fileInput}
+      onchange={loadFile}
+      type="file"
+    />
+  </label>
+</div>
+
+<p class="fst-italic my-3">or...</p>
 
 {#if polygonTool}
   <PolygonControls {polygonTool} />

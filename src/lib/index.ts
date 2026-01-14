@@ -24,8 +24,9 @@ export function downloadGeneratedFile(filename: string, textInput: string) {
 export async function fetchWithProgress(
   url: string,
   setProgress: (progress: number) => void,
+  options?: RequestInit,
 ): Promise<Uint8Array> {
-  let response = await fetch(url);
+  let response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`${url} not OK: ${response.status}`);
   }

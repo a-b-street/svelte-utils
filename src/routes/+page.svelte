@@ -11,6 +11,7 @@
   import { OsmLoader } from "../lib/osm/index.js";
   import { Loading } from "../lib/index.js";
   import type { Map } from "maplibre-gl";
+  import { PolygonToolLayer } from "maplibre-draw-polygon";
 
   let basemap = $state("Maptiler Dataviz");
   let style = $derived(basemapStyles.get(basemap)!);
@@ -60,6 +61,7 @@
           </MapContextMenu>
           <Basemaps bind:basemap />
           <Geocoder {map} {loaded} />
+          <PolygonToolLayer />
         {/snippet}
       </MapLibre>
     </div>

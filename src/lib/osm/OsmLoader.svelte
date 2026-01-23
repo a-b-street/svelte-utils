@@ -2,7 +2,11 @@
   import type { Feature, Polygon } from "geojson";
   import type { LngLat, Map } from "maplibre-gl";
   import { PolygonTool, PolygonControls } from "maplibre-draw-polygon";
-  import { overpassQueryForPolygon } from "./index.js";
+  import {
+    fetchOverpass,
+    overpassQueryForPolygon,
+    OverpassServerSelector,
+  } from "./index.js";
   import { downloadGeneratedFile, Checkbox } from "../index.js";
 
   // The caller must put PolygonToolLayer in the map
@@ -31,7 +35,7 @@
   async function importPolygon(boundaryGj: Feature<Polygon>) {
     try {
       onloading?.("Loading from Overpass");
-      let resp = await fetch(overpassQueryForPolygon(boundaryGj));
+      let resp = await fetchOverpass(overpassQueryForPolygon(boundaryGj));
       if (!resp.ok) {
         throw new Error(
           `Overpass response is not OK: ${resp.status}. The API is often overloaded; try again in a few seconds.`,
@@ -130,6 +134,10 @@
   </button>
 {/if}
 
+<hr class="my-3" />
+
 <Checkbox bind:checked={saveCopy}>
   Save a copy of the osm.xml after importing
 </Checkbox>
+
+<OverpassServerSelector />

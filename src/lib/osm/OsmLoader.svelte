@@ -8,6 +8,7 @@
     OverpassServerSelector,
   } from "./index.js";
   import { downloadGeneratedFile, Checkbox } from "../index.js";
+  import type { Snippet } from "svelte";
 
   // The caller must put PolygonToolLayer in the map
   interface Props {
@@ -15,8 +16,9 @@
     onloading?: (msg: string) => void;
     onload: (osmInput: Uint8Array, boundary: Feature<Polygon> | null) => void;
     onerror?: (msg: string) => void;
+    children?: Snippet;
   }
-  let { map, onloading, onload, onerror }: Props = $props();
+  let { map, onloading, onload, onerror, children }: Props = $props();
 
   let polygonTool: PolygonTool | null = $state(null);
   let saveCopy = $state(false);
@@ -132,6 +134,8 @@
   <button class="btn btn-primary" type="button" onclick={startPolygonTool}>
     Draw an area to import on the map
   </button>
+
+  {@render children?.()}
 {/if}
 
 <hr class="my-3" />

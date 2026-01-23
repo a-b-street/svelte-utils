@@ -8,14 +8,36 @@
     MapContextMenu,
     Geocoder,
   } from "../lib/map/index.js";
+  import { OsmLoader } from "../lib/osm/index.js";
+  import { Loading } from "../lib/index.js";
+  import type { Map } from "maplibre-gl";
 
   let basemap = $state("Maptiler Dataviz");
   let style = $derived(basemapStyles.get(basemap)!);
+
+  let map: Map | undefined = $state();
+  let loading = $state("");
+  function onload(osmInput: Uint8Array, boundary: any) {
+    loading = "";
+    window.alert(`Got ${osmInput.length.toLocaleString()} bytes of OSM input`);
+  }
 </script>
+
+<Loading {loading} />
 
 <Layout>
   {#snippet left()}
     <h1>svelte-utils demo</h1>
+
+    <OsmLoader
+      {map}
+      onloading={(msg) => (loading = msg)}
+      {onload}
+      onerror={(msg) => {
+        window.alert(msg);
+        loading = "";
+      }}
+    />
   {/snippet}
 
   {#snippet main()}
@@ -25,6 +47,7 @@
         onerror={(e) => {
           console.log(e.error);
         }}
+        bind:map
       >
         {#snippet children({ map, loaded })}
           <StandardControls {map} />

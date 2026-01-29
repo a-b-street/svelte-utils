@@ -53,6 +53,7 @@
       onload(new Uint8Array(osmXml), boundaryGj);
     } catch (err: any) {
       onerror?.(err.toString());
+      throw err;
     }
   }
 
@@ -99,8 +100,14 @@
     polygonTool = new PolygonTool(map);
     polygonTool.startNew();
     polygonTool.addEventListenerSuccess(async (f) => {
-      polygonTool = null;
-      await importPolygon(f);
+      try {
+        await importPolygon(f);
+        // Only clear after successful import
+        polygonTool = null;
+      } catch (err) {
+        // Keep polygonTool active on error so user can retry
+        // Error is already handled by onerror callback in importPolygon
+      }
     });
     polygonTool.addEventListenerFailure(() => {
       polygonTool = null;

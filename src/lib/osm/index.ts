@@ -1,5 +1,6 @@
 import type { Feature, Polygon, MultiPolygon } from "geojson";
-import { writable, type Writable, get } from "svelte/store";
+import { get } from "svelte/store";
+import { localStorageStore } from "../index.js";
 
 export { default as OsmLoader } from "./OsmLoader.svelte";
 export { default as OverpassServerSelector } from "./OverpassServerSelector.svelte";
@@ -26,7 +27,6 @@ export function overpassQueryForPolygon(
   return `(nwr(${filter}); node(w)->.x; <;); out meta;`;
 }
 
-const localStorageKey = "overpass-server";
 const defaultServer = "https://overpass-api.de/api/";
 // https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances
 export const overpassServers = [
@@ -36,14 +36,11 @@ export const overpassServers = [
   "https://overpass.kumi.systems/api/",
 ];
 
-export const overpassServer: Writable<string> = writable(
-  window?.localStorage.getItem(localStorageKey) || defaultServer,
+export const overpassServer = localStorageStore(
+  "overpass-server",
+  defaultServer,
 );
-
-// Store changes in local storage
-overpassServer.subscribe((server) => {
-  window?.localStorage.setItem(localStorageKey, server);
-});
+export const saveCopy = localStorageStore("save-osm-copy", false);
 
 export async function fetchOverpass(query: string): Promise<Response> {
   let resp = await fetch(`${get(overpassServer)}interpreter`, {

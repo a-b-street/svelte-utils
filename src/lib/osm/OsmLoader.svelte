@@ -6,8 +6,13 @@
     fetchOverpass,
     overpassQueryForPolygon,
     OverpassServerSelector,
+    saveCopy,
   } from "./index.js";
-  import { downloadGeneratedFile, Checkbox } from "../index.js";
+  import {
+    downloadGeneratedFile,
+    Checkbox,
+    LocalStorageWrapper,
+  } from "../index.js";
   import type { Snippet } from "svelte";
 
   // The caller must put PolygonToolLayer in the map
@@ -21,7 +26,6 @@
   let { map, onloading, onload, onerror, children }: Props = $props();
 
   let polygonTool: PolygonTool | null = $state(null);
-  let saveCopy = $state(false);
   let fileInput: HTMLInputElement | undefined = $state();
 
   async function loadFile(e: Event) {
@@ -45,7 +49,7 @@
       }
       let osmXml = await resp.bytes();
 
-      if (saveCopy) {
+      if ($saveCopy) {
         let text = new TextDecoder().decode(osmXml);
         downloadGeneratedFile("osm.xml", text);
       }
@@ -140,8 +144,10 @@
 
 <hr class="my-3" />
 
-<Checkbox bind:checked={saveCopy}>
-  Save a copy of the osm.xml after importing
-</Checkbox>
+<LocalStorageWrapper>
+  <Checkbox bind:checked={$saveCopy}>
+    Save a copy of the osm.xml after importing
+  </Checkbox>
+</LocalStorageWrapper>
 
 <OverpassServerSelector />

@@ -1,6 +1,9 @@
+import { type Writable, writable } from "svelte/store";
+
 export { default as Checkbox } from "./Checkbox.svelte";
 export { default as Legend } from "./Legend.svelte";
 export { default as Loading } from "./Loading.svelte";
+export { default as LocalStorageWrapper } from "./LocalStorageWrapper.svelte";
 export { default as Modal } from "./Modal.svelte";
 export { default as PropertiesTable } from "./PropertiesTable.svelte";
 export { default as QualitativeLegend } from "./QualitativeLegend.svelte";
@@ -71,4 +74,44 @@ export function stripPrefix(value: string, prefix: string): string {
 
 export function stripSuffix(value: string, suffix: string): string {
   return value.endsWith(suffix) ? value.slice(0, -suffix.length) : value;
+}
+
+/**
+ * Creates a localStorage-backed writable store.
+ * The value is automatically synced with localStorage on every change.
+ * On initialization, the value is loaded from localStorage if available.
+ */
+export function localStorageStore<T>(
+  key: string,
+  defaultValue: T,
+): Writable<T> {
+  // Try to read initial value from localStorage
+  let initialValue = defaultValue;
+  try {
+    const stored = localStorage.getItem(key);
+    if (stored !== null) {
+      initialValue = JSON.parse(stored) as T;
+    }
+  } catch (err) {
+    console.warn(`Failed to read ${key} from localStorage:`, err);
+  }
+
+  // Create the store
+  const store = writable<T>(initialValue);
+
+  // Subscribe to changes and write to localStorage
+  store.subscribe((value) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (err) {
+      // Handle quota exceeded or other localStorage errors
+      if (err instanceof DOMException && err.name === "QuotaExceededError") {
+        console.warn(`localStorage quota exceeded for ${key}`);
+      } else {
+        console.warn(`Failed to write ${key} to localStorage:`, err);
+      }
+    }
+  });
+
+  return store;
 }

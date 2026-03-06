@@ -137,6 +137,14 @@ export let basemapStyles: SvelteMap<string, string | StyleSpecification> =
       `https://api.maptiler.com/maps/dataviz/style.json?key=${maptilerKey}`,
     ],
     [
+      "Maptiler Dataviz Light",
+      `https://api.maptiler.com/maps/dataviz-light/style.json?key=${maptilerKey}`,
+    ],
+    [
+      "Maptiler Dataviz Dark",
+      `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${maptilerKey}`,
+    ],
+    [
       "Maptiler Dark",
       `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${maptilerKey}`,
     ],

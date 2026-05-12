@@ -1,6 +1,6 @@
 {
   "name": "abstreet-svelte-utils",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run package",
@@ -79,7 +79,7 @@
   "dependencies": {
     "@maptiler/geocoding-control": "^2.1.7",
     "@turf/bbox": "^7.2.0",
-    "maplibre-draw-polygon": "github:dabreegster/maplibre-draw-polygon",
+    "maplibre-draw-polygon": "^0.0.1",
     "maplibre-gl": "^5.6.1",
     "svelte-maplibre": "^1.2.0"
   }

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { GeocodingControl } from "@maptiler/geocoding-control/maplibregl";
-  import "@maptiler/geocoding-control/style.css";
-  import maplibregl, { type Map } from "maplibre-gl";
+  import { type Map } from "maplibre-gl";
   import { maptilerKey } from "./index.js";
   import { onDestroy } from "svelte";
 
@@ -45,10 +44,8 @@
 
   $effect(() => {
     if (map && loaded && !gc) {
-      // TODO There's no TS for these options, but I think they're right...
       gc = new GeocodingControl({
         apiKey: maptilerKey,
-        maplibregl,
         proximity: [
           {
             type: "map-center",
@@ -58,10 +55,7 @@
         country,
         marker: true,
         showResultMarkers: true,
-        flyToOptions: {
-          duration: 1000,
-        },
-        fitBoundsOptions: {
+        flyTo: {
           duration: 1000,
         },
       });

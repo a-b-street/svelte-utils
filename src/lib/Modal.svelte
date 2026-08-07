@@ -17,6 +17,13 @@
     if (modalDialog) {
       if (show) {
         modalDialog.showModal();
+        // showModal() auto-focuses the first focusable descendant (often a
+        // button near the bottom of the content), which scrolls it into
+        // view. Move focus to the dialog itself and reset the scroll
+        // position that the auto-focus already caused, so it opens
+        // scrolled to the top.
+        modalDialog.focus();
+        modalDialog.scrollTop = 0;
       } else {
         modalDialog.close();
       }
@@ -46,6 +53,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <dialog
   bind:this={modalDialog}
+  tabindex="-1"
   onclick={onClick}
   onkeydown={onKeyDown}
   closedby="none"

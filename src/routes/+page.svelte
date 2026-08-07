@@ -9,7 +9,7 @@
     Geocoder,
   } from "../lib/map/index.js";
   import { OsmLoader } from "../lib/osm/index.js";
-  import { Loading } from "../lib/index.js";
+  import { Loading, Modal } from "../lib/index.js";
   import type { Map } from "maplibre-gl";
   import { PolygonToolLayer } from "maplibre-draw-polygon";
 
@@ -22,6 +22,8 @@
     loading = "";
     window.alert(`Got ${osmInput.length.toLocaleString()} bytes of OSM input`);
   }
+
+  let show = $state(false);
 </script>
 
 <Loading {loading} />
@@ -39,6 +41,15 @@
         loading = "";
       }}
     />
+
+    <button onclick={() => (show = true)}>Show modal</button>
+    <Modal bind:show>
+      {#each Array(50).keys() as idx}
+        <p>Line {idx}</p>
+      {/each}
+
+      <button onclick={() => (show = false)}>Close</button>
+    </Modal>
   {/snippet}
 
   {#snippet main()}

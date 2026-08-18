@@ -1,21 +1,25 @@
 <script lang="ts">
   import { GeocodingControl } from "@maptiler/geocoding-control/maplibregl";
-  import { type Map } from "maplibre-gl";
   import { maptilerKey } from "./index.js";
-  import { onDestroy } from "svelte";
+  import { type Map } from "maplibre-gl";
+  import { untrack } from "svelte";
+
+  type BBox = [minX: number, minY: number, maxX: number, maxY: number];
 
   // Callers may want to override the position of :global(.maplibregl-ctrl-geocoder)
   interface Props {
     map: Map | undefined;
     loaded: boolean;
     country?: string;
+    /** `[minX, minY, maxX, maxY]` — limits results to this area. */
+    bbox?: BBox;
   }
-  let { map, loaded, country }: Props = $props();
+  let { map, loaded, country, bbox }: Props = $props();
 
   let gc: GeocodingControl | undefined = $state();
 
   // From https://docs.maptiler.com/cloud/api/geocoding/#PlaceType. poi is excluded by default.
-  let allTypes = [
+  const allTypes = [
     "continental_marine",
     "country",
     "major_landform",
@@ -33,34 +37,39 @@
     "address",
     "road",
     "poi",
-  ];
+  ] as const;
 
-  onDestroy(() => {
-    if (gc) {
-      map?.removeControl(gc);
-      gc = undefined;
+  $effect(() => {
+    if (!map || !loaded) {
+      return;
     }
+
+    const control = new GeocodingControl({
+      apiKey: maptilerKey,
+      proximity: [
+        {
+          type: "map-center",
+        },
+      ],
+      types: allTypes,
+      country: untrack(() => country),
+      bbox: untrack(() => bbox),
+      marker: true,
+      showResultMarkers: true,
+      flyTo: {
+        duration: 1000,
+      },
+    });
+    map.addControl(control, "top-left");
+    gc = control;
+
+    return () => {
+      map.removeControl(control);
+      gc = undefined;
+    };
   });
 
   $effect(() => {
-    if (map && loaded && !gc) {
-      gc = new GeocodingControl({
-        apiKey: maptilerKey,
-        proximity: [
-          {
-            type: "map-center",
-          },
-        ],
-        types: allTypes,
-        country,
-        marker: true,
-        showResultMarkers: true,
-        flyTo: {
-          duration: 1000,
-        },
-      });
-      // This position is overridden by the style rule below
-      map.addControl(gc, "top-left");
-    }
+    gc?.setOptions({ bbox, country });
   });
 </script>

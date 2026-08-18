@@ -59,6 +59,7 @@
       flyTo: {
         duration: 1000,
       },
+      collapsed: true,
     });
     map.addControl(control, "top-left");
     gc = control;

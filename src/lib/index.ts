@@ -22,26 +22,28 @@ export function downloadGeneratedFile(filename: string, textInput: string) {
 }
 
 // Fetch a URL and return bytes. Along the way, calls setProgress with a number
-// [0, 100] -- but sometimes over 100 when the file is compressed. This
-// function will throw if the server doesn't send back a Content-Length header.
+// [0, 100] -- but sometimes over 100 when the file is compressed. If the server
+// doesn't send back a Content-Length header (some proxies strip it or force
+// chunked encoding), setProgress is called once with null and the download
+// proceeds without progress updates.
 export async function fetchWithProgress(
   url: string,
-  setProgress: (progress: number) => void,
+  setProgress: (progress: number | null) => void,
   options?: RequestInit,
 ): Promise<Uint8Array> {
   let response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`${url} not OK: ${response.status}`);
   }
-  // TODO Handle error cases better
-  let reader = response.body!.getReader();
 
   let lengthHeader = response.headers.get("Content-Length");
-  if (!lengthHeader) {
-    throw new Error(`No Content-Length header from ${url}`);
+  let contentLength = lengthHeader ? parseInt(lengthHeader) : NaN;
+  if (!response.body || !(contentLength > 0)) {
+    setProgress(null);
+    return new Uint8Array(await response.arrayBuffer());
   }
-  let contentLength = parseInt(lengthHeader);
 
+  let reader = response.body.getReader();
   let receivedLength = 0;
   let chunks = [];
   while (true) {

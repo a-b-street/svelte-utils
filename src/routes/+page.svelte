@@ -10,8 +10,11 @@
   } from "../lib/map/index.js";
   import { OsmLoader } from "../lib/osm/index.js";
   import { Loading, Modal } from "../lib/index.js";
-  import type { Map } from "maplibre-gl";
+  import { setWorkerUrl, type Map } from "maplibre-gl";
+  import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
   import { PolygonToolLayer } from "maplibre-draw-polygon";
+
+  setWorkerUrl(maplibreWorkerUrl);
 
   let basemap = $state("Maptiler Dataviz");
   let style = $derived(basemapStyles.get(basemap)!);

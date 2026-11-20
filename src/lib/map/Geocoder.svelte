@@ -51,7 +51,7 @@
           type: "map-center",
         },
       ],
-      types: allTypes,
+      types: [...allTypes],
       country: untrack(() => country),
       bbox: untrack(() => bbox),
       marker: true,
